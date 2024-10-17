@@ -19,31 +19,31 @@ fn hello_world(my_name: String) -> String {
 }
 
 #[tauri::command]
-#[specta::specta]
+// #[specta::specta]
 fn goodbye_world() -> impl Serialize + specta::Type {
     "Goodbye world :("
 }
 
 #[tauri::command]
-#[specta::specta]
+// #[specta::specta]
 fn has_error() -> Result<&'static str, i32> {
     Err(32)
 }
 
 #[tauri::command]
-#[specta::specta]
+// #[specta::specta]
 fn generic<T: tauri::Runtime>(_app: tauri::AppHandle<T>) {}
 
 #[deprecated = "This is a deprecated function"]
 #[tauri::command]
-#[specta::specta]
+// #[specta::specta]
 fn deprecated() {}
 
 mod nested {
     use super::*;
 
     #[tauri::command]
-    #[specta::specta]
+    // #[specta::specta]
     pub fn some_struct() -> MyStruct {
         MyStruct {
             some_field: "Hello World".into(),
@@ -72,7 +72,7 @@ pub enum MyError {
 }
 
 #[tauri::command]
-#[specta::specta]
+// #[specta::specta]
 fn typesafe_errors_using_thiserror() -> Result<(), MyError> {
     Err(MyError::IoError(std::io::Error::new(
         std::io::ErrorKind::Other,
@@ -94,7 +94,7 @@ impl From<std::io::Error> for MyError2 {
 }
 
 #[tauri::command]
-#[specta::specta]
+// #[specta::specta]
 fn typesafe_errors_using_thiserror_with_value() -> Result<(), MyError2> {
     // some_method()?; // This will work because `?` does `From` conversion.
 
@@ -119,13 +119,13 @@ fn main() {
     let builder = Builder::<tauri::Wry>::new()
         .commands(tauri_specta::collect_commands![
             hello_world,
-            goodbye_world,
-            has_error,
-            nested::some_struct,
-            generic::<tauri::Wry>,
-            deprecated,
-            typesafe_errors_using_thiserror,
-            typesafe_errors_using_thiserror_with_value,
+            // goodbye_world,
+            // has_error,
+            // nested::some_struct,
+            // generic::<tauri::Wry>,
+            // deprecated,
+            // typesafe_errors_using_thiserror,
+            // typesafe_errors_using_thiserror_with_value,
         ])
         .events(tauri_specta::collect_events![crate::DemoEvent, EmptyEvent])
         .typ::<Custom>()

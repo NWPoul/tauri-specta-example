@@ -12,45 +12,6 @@ export const commands = {
  */
 async helloWorld(myName: string) : Promise<string> {
     return await TAURI_INVOKE("hello_world", { myName });
-},
-async goodbyeWorld() : Promise<string> {
-    return await TAURI_INVOKE("goodbye_world");
-},
-async hasError() : Promise<Result<string, number>> {
-    try {
-    return { status: "ok", data: await TAURI_INVOKE("has_error") };
-} catch (e) {
-    if(e instanceof Error) throw e;
-    else return { status: "error", error: e  as any };
-}
-},
-async someStruct() : Promise<MyStruct> {
-    return await TAURI_INVOKE("some_struct");
-},
-async generic() : Promise<void> {
-    await TAURI_INVOKE("generic");
-},
-/**
- * @deprecated This is a deprecated function
- */
-async deprecated() : Promise<void> {
-    await TAURI_INVOKE("deprecated");
-},
-async typesafeErrorsUsingThiserror() : Promise<Result<null, MyError>> {
-    try {
-    return { status: "ok", data: await TAURI_INVOKE("typesafe_errors_using_thiserror") };
-} catch (e) {
-    if(e instanceof Error) throw e;
-    else return { status: "error", error: e  as any };
-}
-},
-async typesafeErrorsUsingThiserrorWithValue() : Promise<Result<null, MyError2>> {
-    try {
-    return { status: "ok", data: await TAURI_INVOKE("typesafe_errors_using_thiserror_with_value") };
-} catch (e) {
-    if(e instanceof Error) throw e;
-    else return { status: "error", error: e  as any };
-}
 }
 }
 
@@ -74,9 +35,6 @@ export const universalConstant = 42 as const;
 export type Custom = string
 export type DemoEvent = string
 export type EmptyEvent = null
-export type MyError = { type: "IoError" } | { type: "AnotherError"; data: string }
-export type MyError2 = { type: "IoError"; data: string }
-export type MyStruct = { some_field: string }
 
 /** tauri-specta globals **/
 
